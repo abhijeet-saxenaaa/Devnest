@@ -12,13 +12,13 @@ const SECRET = 'SEC3rt';  // This should be in an environment variable in a real
 const userSchema = new mongoose.Schema({
   username: {type: String},
   password: String,
-  purchasedCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }]
+ YourCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Course' }]
 });
 
 const adminSchema = new mongoose.Schema({
   username: String,
   password: String
-});
+})
 
 const courseSchema = new mongoose.Schema({
   title: String,
@@ -147,10 +147,10 @@ app.post('/users/courses/:courseId', authenticateJwt, async (req, res) => {
   }
 });
 
-app.get('/users/purchasedCourses', authenticateJwt, async (req, res) => {
-  const user = await User.findOne({ username: req.user.username }).populate('purchasedCourses');
+app.get('/users/YourCourses', authenticateJwt, async (req, res) => {
+  const user = await User.findOne({ username: req.user.username }).populate('YourCourses');
   if (user) {
-    res.json({ purchasedCourses: user.purchasedCourses || [] });
+    res.json({ YourCourses: user.YourCourses || [] });
   } else {
     res.status(403).json({ message: 'User not found' });
   }
